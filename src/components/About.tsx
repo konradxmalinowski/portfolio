@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
-import pfp from '../assets/pfp.jpg'
+import pfp from '../assets/pfp.jpg';
 
 const About = () => {
   const ref = useRef(null)
