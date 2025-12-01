@@ -15,7 +15,7 @@ const About = () => {
   ]
 
   return (
-    <section id="about" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative">
+    <section id="about" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative" aria-label="About me section">
       <div className="container mx-auto px-6">
         <motion.div
           ref={ref}
@@ -28,7 +28,7 @@ const About = () => {
             {t('about.title')}
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8" role="list" aria-label="Professional statistics">
             {/* Stats Cards */}
             {stats.map((stat, index) => (
               <motion.div
@@ -38,6 +38,7 @@ const About = () => {
                 transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                 whileHover={{ scale: 1.05, y: -5 }}
                 className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
+                role="listitem"
               >
                 <div className="text-4xl mb-3">{stat.icon}</div>
                 <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.value}</div>
@@ -62,7 +63,7 @@ const About = () => {
                 <div className="w-full aspect-square bg-gradient-to-br from-blue-600/30 to-cyan-600/30 rounded-2xl overflow-hidden backdrop-blur-lg border border-blue-500/30 p-4">
                   <img
                     src={pfp}
-                    alt="Konrad Malinowski"
+                    alt="Konrad Malinowski - Professional portrait"
                     className="w-full h-full object-cover rounded-xl"
                   />
                 </div>

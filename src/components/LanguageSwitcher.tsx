@@ -10,6 +10,8 @@ const LanguageSwitcher = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.5 }}
       className="fixed top-6 right-6 z-50"
+      role="group"
+      aria-label="Language switcher"
     >
       <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-full p-1 flex gap-1">
         <motion.button
@@ -21,6 +23,8 @@ const LanguageSwitcher = () => {
               ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50'
               : 'text-white/70 hover:text-white'
           }`}
+          aria-label="Switch to English"
+          aria-pressed={language === 'en'}
         >
           EN
         </motion.button>
@@ -33,6 +37,8 @@ const LanguageSwitcher = () => {
               ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/50'
               : 'text-white/70 hover:text-white'
           }`}
+          aria-label="Switch to Polish"
+          aria-pressed={language === 'pl'}
         >
           PL
         </motion.button>

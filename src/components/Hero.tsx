@@ -6,7 +6,7 @@ const Hero = () => {
   const { t } = useLanguage()
 
   return (
-    <section className="min-h-[100dvh] flex items-center justify-center bg-transparent relative overflow-hidden">
+    <section className="min-h-[100dvh] flex items-center justify-center bg-transparent relative overflow-hidden" aria-label="Hero section - Introduction">
       <div className="w-full max-w-6xl mx-auto px-6 py-0 md:py-8 text-center relative z-10 transform translate-y-6 md:translate-y-0">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -24,10 +24,12 @@ const Hero = () => {
             }}
             transition={{ duration: 2, repeat: Infinity }}
             className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 p-1 overflow-hidden"
+            role="img"
+            aria-label="Profile picture of Konrad Malinowski"
           >
             <img
               src={pfp}
-              alt="Konrad Malinowski"
+              alt="Konrad Malinowski - Full-stack Developer"
               className="w-full h-full object-cover rounded-full"
             />
           </motion.div>
@@ -57,16 +59,15 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col items-center gap-6"
         >
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-300 shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/70"
-          >
-            {t('hero.cta')}
-          </motion.a>
-
-          {/* Social Links */}
+        <motion.a
+          href="#contact"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-300 shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/70"
+          aria-label="Navigate to contact section"
+        >
+          {t('hero.cta')}
+        </motion.a>          {/* Social Links */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

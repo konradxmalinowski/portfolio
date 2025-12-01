@@ -90,7 +90,7 @@ const Services = () => {
   }
 
   return (
-    <section id="services" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative">
+    <section id="services" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative" aria-label="Services offered section">
       <div className="container mx-auto px-6">
         <motion.div
           ref={ref}
@@ -111,6 +111,8 @@ const Services = () => {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            role="list"
+            aria-label="Available services"
           >
             {services.map((service, index) => (
               <motion.div
@@ -119,6 +121,7 @@ const Services = () => {
                 whileHover={{ scale: 1.03, y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
+                role="listitem"
               >
                 <div className="w-16 h-16 bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-400 mb-4">
                   {service.icon}
@@ -129,10 +132,10 @@ const Services = () => {
                 <p className="text-white/70 mb-4 leading-relaxed">
                   {service.description}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-2" aria-label="Service features">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center text-white/60 text-sm">
-                      <svg className="w-4 h-4 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       {feature}

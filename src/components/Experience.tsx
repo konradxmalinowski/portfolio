@@ -168,7 +168,7 @@ const Experience = () => {
   }, [experiences.length])
 
   return (
-    <section id="experience" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative overflow-x-hidden">
+    <section id="experience" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative overflow-x-hidden" aria-label="Work experience section">
       <div className="container mx-auto px-6">
         <div ref={ref}>
           <motion.div
@@ -191,7 +191,7 @@ const Experience = () => {
                 }
               />
 
-              <div className="space-y-8">
+              <div className="space-y-8" role="list" aria-label="Work experience timeline">
                 {experiences.map((exp, index) => {
                   const start = parseDate(exp.start)
                   const end = parseDate(exp.end)
@@ -199,7 +199,7 @@ const Experience = () => {
                   const durationText = computeDuration(start, end)
 
                   return (
-                    <div key={index} data-timeline-item className="md:grid md:grid-cols-[48px_1fr] md:gap-6">
+                    <div key={index} data-timeline-item className="md:grid md:grid-cols-[48px_1fr] md:gap-6" role="listitem">
                       {/* timeline column */}
                         <div className="hidden md:flex items-start justify-center">
                           <div className="mt-8">
@@ -216,7 +216,7 @@ const Experience = () => {
                         ref={index === 0 ? firstCardRef : index === experiences.length - 1 ? lastCardRef : undefined}
                       >
                         {exp.current && (
-                          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : { scale: 0 }} transition={{ delay: 0.5 + index * 0.2 }} className="absolute -top-3 -right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : { scale: 0 }} transition={{ delay: 0.5 + index * 0.2 }} className="absolute -top-3 -right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full" role="status" aria-label="Current position">
                             {t('experience.current')}
                           </motion.div>
                         )}
@@ -232,9 +232,9 @@ const Experience = () => {
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-2 text-white/60 text-sm mb-4">
+                        <div className="flex flex-wrap gap-2 text-white/60 text-sm mb-4" aria-label="Employment details">
                           <span className="flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             {periodText}
@@ -243,7 +243,7 @@ const Experience = () => {
                           <span>{durationText}</span>
                           <span className="text-white/40">·</span>
                           <span className="flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
@@ -253,9 +253,9 @@ const Experience = () => {
 
                         <p className="text-white/80 leading-relaxed mb-4">{exp.description}</p>
 
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2" role="list" aria-label="Skills used in this role">
                           {exp.skills.map((skill, idx) => (
-                            <motion.span key={idx} whileHover={{ scale: 1.1 }} className="px-3 py-1 bg-blue-600/30 text-blue-200 rounded-lg text-xs font-medium border border-blue-500/30">
+                            <motion.span key={idx} whileHover={{ scale: 1.1 }} className="px-3 py-1 bg-blue-600/30 text-blue-200 rounded-lg text-xs font-medium border border-blue-500/30" role="listitem">
                               {skill}
                             </motion.span>
                           ))}

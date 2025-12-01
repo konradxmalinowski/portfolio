@@ -73,7 +73,7 @@ const Contact = () => {
   ]
 
   return (
-    <section id="contact" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative">
+    <section id="contact" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative" aria-label="Contact section">
       <div className="container mx-auto px-6">
         <motion.div
           ref={ref}
@@ -109,6 +109,7 @@ const Contact = () => {
                       rel={method.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                       whileHover={{ scale: 1.02, x: 5 }}
                       className="flex items-center gap-4 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all duration-300 group"
+                      aria-label={`Contact via ${method.title}: ${method.value}`}
                     >
                       <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-400 group-hover:bg-blue-600/30 transition-colors">
                         {method.icon}
@@ -170,6 +171,7 @@ const Contact = () => {
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 space-y-6 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
+              aria-label="Contact form"
             >
               <h3 className="text-2xl font-bold text-white mb-6">{t('contact.form.title')}</h3>
 
@@ -221,6 +223,7 @@ const Contact = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/70"
+                aria-label={isSubmitting ? 'Sending message...' : 'Submit contact form'}
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">
