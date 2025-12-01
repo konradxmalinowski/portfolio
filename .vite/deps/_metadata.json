@@ -1,37 +1,37 @@
 {
-  "hash": "cc366c2f",
-  "configHash": "40ac2a62",
-  "lockfileHash": "635356cd",
-  "browserHash": "eb2923b8",
+  "hash": "535ff20a",
+  "configHash": "5d43fffe",
+  "lockfileHash": "c9d7a399",
+  "browserHash": "b21e1f1a",
   "optimized": {
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "f5610f3e",
+      "fileHash": "303319d4",
       "needsInterop": true
     },
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "ce472315",
+      "fileHash": "3cf04cd9",
       "needsInterop": true
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "c885d0a6",
+      "fileHash": "17c07f8c",
       "needsInterop": true
     },
     "framer-motion": {
       "src": "../../node_modules/framer-motion/dist/es/index.mjs",
       "file": "framer-motion.js",
-      "fileHash": "cc8ccaec",
+      "fileHash": "28ccf00f",
       "needsInterop": false
     },
     "@emailjs/browser": {
       "src": "../../node_modules/@emailjs/browser/es/index.js",
       "file": "@emailjs_browser.js",
-      "fileHash": "94825188",
+      "fileHash": "afa6d96d",
       "needsInterop": false
     }
   },
