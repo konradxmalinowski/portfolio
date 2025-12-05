@@ -122,15 +122,19 @@ const Hero = () => {
           transition={{ duration: 1, delay: 1.2 }}
           className="mt-12"
         >
-          <motion.div
+          <motion.a
+            href="#about"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="text-white/50"
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+            className="text-white/50 hover:text-white/80 transition-colors cursor-pointer inline-block"
+            aria-label="Scroll to About section"
           >
             <svg className="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
-          </motion.div>
+          </motion.a>
         </motion.div>
       </div>
 
