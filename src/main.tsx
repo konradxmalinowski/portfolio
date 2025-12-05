@@ -6,9 +6,7 @@ import './index.css'
 import './styles/mobile.css'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
-  </StrictMode>,
+  <LanguageProvider>
+    <App />
+  </LanguageProvider>,
 )

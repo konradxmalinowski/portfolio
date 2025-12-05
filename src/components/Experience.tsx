@@ -112,7 +112,7 @@ const Experience = () => {
         <div ref={ref}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
             className="max-w-5xl mx-auto relative z-10"
           >
@@ -144,7 +144,7 @@ const Experience = () => {
                         className="flex-1 bg-white/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
                       >
                         {exp.current && (
-                          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : { scale: 0 }} transition={{ delay: 0.5 + index * 0.2 }} className="absolute -top-3 -right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full" role="status" aria-label="Current position">
+                          <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : {}} transition={{ delay: 0.5 + index * 0.2 }} className="absolute -top-3 -right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full" role="status" aria-label="Current position">
                             {t('experience.current')}
                           </motion.div>
                         )}

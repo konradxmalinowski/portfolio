@@ -134,7 +134,7 @@ const Hero = () => {
           <motion.a
             href="#about"
             animate={!prefersReducedMotion ? { y: [0, 10, 0] } : {}}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
             whileHover={!prefersReducedMotion ? { scale: 1.2 } : {}}
             whileTap={!prefersReducedMotion ? { scale: 0.9 } : {}}
             className="text-white/50 hover:text-white/80 transition-colors cursor-pointer inline-block"
