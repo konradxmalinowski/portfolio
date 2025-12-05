@@ -123,11 +123,11 @@ const Experience = () => {
             <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="relative">
               {/* Timeline line - positioned absolutely, centered on dots */}
               <div
-                className="hidden md:block absolute left-[22px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-blue-600 to-transparent opacity-0 transition-opacity duration-500"
+                className="absolute left-[14px] md:left-[22px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-blue-600 to-transparent opacity-0 transition-opacity duration-500"
                 style={{ opacity: isReady ? 1 : 0 }}
               />
 
-              <div className="space-y-12" role="list" aria-label="Work experience timeline">
+              <div className="space-y-8 md:space-y-12" role="list" aria-label="Work experience timeline">
                 {experiences.map((exp, index) => {
                   const start = parseDate(exp.start)
                   const end = parseDate(exp.end)
@@ -135,10 +135,10 @@ const Experience = () => {
                   const durationText = computeDuration(start, end)
 
                   return (
-                    <div key={index} className="relative flex gap-6 md:gap-8" role="listitem">
+                    <div key={index} className="relative flex gap-4 md:gap-8" role="listitem">
                       {/* Timeline dot - aligned with title */}
-                      <div className="hidden md:flex items-start justify-center pt-2 shrink-0 w-11">
-                        <span className="block w-4 h-4 bg-white rounded-full border-4 border-blue-500 shadow-lg shadow-blue-500/50 relative z-10" />
+                      <div className="flex items-start justify-center pt-2 shrink-0 w-7 md:w-11">
+                        <span className="block w-3 h-3 md:w-4 md:h-4 bg-white rounded-full border-2 md:border-4 border-blue-500 shadow-lg shadow-blue-500/50 relative z-10" />
                       </div>
 
                       <motion.div
