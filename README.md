@@ -1,96 +1,124 @@
-# Portfolio Website
+# Professional Portfolio Website
 
-Modern, animated portfolio website built with React, TypeScript, Vite, Tailwind CSS, and Framer Motion.
+A modern, fully bilingual (EN/PL) portfolio website showcasing professional experience, technical skills, and service offerings. Built with React 19, TypeScript, and powered by smooth Framer Motion animations.
 
-## Features
+**Live Demo:** [konradxmalinowski.github.io/Portfolio](https://konradxmalinowski.github.io/Portfolio)
 
-- **Animated Hero Section** - Pulsing avatar, gradient text, rotating decorative elements
-- **About Section** - Personal introduction with hover effects
-- **Tech Stack Section** - Categorized skills with interactive cards
-- **Contact Form** - EmailJS integration for direct messages
-- **Scroll Progress Bar** - Visual indicator of page scroll
-- **Animated Background** - Floating particles and gradient orbs
-- **Social Links** - GitHub, LinkedIn, Email
-- **Fully Responsive** - Works on all devices
-- **Modern Animations** - Framer Motion powered interactions
+## Key Features
+
+### Multilingual Support
+- **Full bilingual implementation** (English/Polish) with context-based translations
+- Automatic browser language detection
+- Persistent language preference in localStorage
+- 250+ translation strings covering all UI elements
+
+### Professional Sections
+- **Hero Section** - Animated profile photo with pulsing glow effect, gradient text, and rotating decorative elements
+- **About** - Personal introduction with highlighted key characteristics
+- **Services** - 6 professional service offerings with detailed feature lists
+  - Landing Pages
+  - Portfolio Websites
+  - WordPress Development
+  - Full-Stack Applications
+  - Website Optimization
+  - Database Design & Management
+- **Experience Timeline** - Dynamic work history with:
+  - Real-time duration calculation
+  - Current position badges
+  - Skill tags for each role
+  - Responsive timeline visualization
+- **Tech Stack** - Categorized skills display (Frontend, Backend, Databases, Tools)
+- **Contact** - Functional contact form with EmailJS integration
+
+### UI/UX Features
+- Scroll progress indicator
+- Animated background with floating particles and gradient orbs
+- Smooth section transitions
+- Fully responsive design with mobile-optimized styles
+- Accessible ARIA labels and semantic HTML
+- Glass-morphism design elements
 
 ## Tech Stack
 
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **Tailwind CSS** - Styling
-- **Framer Motion** - Animations
-- **EmailJS** - Contact form functionality
+- **React 19** - Latest React with modern hooks
+- **TypeScript** - Full type safety
+- **Vite 7.2** - Fast build tool and dev server
+- **Tailwind CSS 3.4** - Utility-first styling
+- **Framer Motion 11** - Advanced animations
+- **EmailJS** - Contact form backend
 
 ## Installation
 
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/konradxmalinowski/portfolio.git
 cd portfolio
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Setup EmailJS (optional, for contact form):
-   - Follow instructions in `EMAILJS_SETUP.md`
-   - Update credentials in `src/components/Contact.tsx`
-
-4. Run development server:
-```bash
+# Start development server
 npm run dev
 ```
 
-5. Open [http://localhost:5173](http://localhost:5173)
+The site will be available at `http://localhost:5173`
 
-## Build for Production
+## Configuration
+
+### EmailJS Setup (Optional)
+
+For the contact form to work:
+
+1. Create an account at [EmailJS](https://www.emailjs.com/)
+2. Follow the setup guide in `EMAILJS_SETUP.md`
+3. Update credentials in `src/components/Contact.tsx`:
+   ```typescript
+   const serviceId = 'your_service_id'
+   const templateId = 'your_template_id'
+   const publicKey = 'your_public_key'
+   ```
+
+### Customization Guide
+
+**Personal Information:**
+- `src/contexts/LanguageContext.tsx` - Update all translation strings (lines 14-251)
+- `src/components/Hero.tsx` - Replace profile photo at line 3: `import pfp from '../assets/pfp.jpg'`
+- `src/components/Experience.tsx` - Update work experience array (lines 23-46)
+
+**Services Offered:**
+- `src/components/Services.tsx` - Modify services array (lines 10-71)
+- Update corresponding translations in `LanguageContext.tsx`
+
+**Tech Stack:**
+- `src/components/Skills.tsx` - Update skill categories and items
+
+**Styling:**
+- `tailwind.config.ts` - Global theme configuration
+- `src/index.css` - Base styles and custom utilities
+- `src/styles/mobile.css` - Mobile-specific overrides
+
+**Deployment:**
+- `vite.config.ts` - Update `base` path to match your repository name (currently `/Portfolio/`)
+- `package.json` - Update `homepage` field (line 2)
+
+## Build & Deploy
 
 ```bash
+# Build for production
 npm run build
+
+# Preview production build locally
+npm run preview
+
+# Deploy to GitHub Pages
+npm run deploy
 ```
 
-## Deploy to GitHub Pages
-
-1. Update `base` in `vite.config.ts`:
-   ```typescript
-   base: '/your-repo-name/',  // Change to your repository name
-   ```
-
-2. Build and deploy:
-   ```bash
-   npm run build
-   npm run deploy
-   ```
-
-Your site will be live at `https://yourusername.github.io/your-repo-name/`
-
-## Customization
-
-### Update Personal Information
-
-**Hero Section** (`src/components/Hero.tsx`):
-- Change name and initials
-- Update social media links (GitHub, LinkedIn, Email)
-
-**About Section** (`src/components/About.tsx`):
-- Edit personal description
-
-**Skills Section** (`src/components/Skills.tsx`):
-- Modify skill categories and technologies
-
-**Contact Section** (`src/components/Contact.tsx`):
-- Update email address
-- Configure EmailJS credentials
-
-### Styling
-
-All colors and styles can be customized in:
-- `tailwind.config.ts` - Global theme configuration
-- Individual component files - Component-specific styles
+**GitHub Pages Configuration:**
+1. Ensure `base` in `vite.config.ts` matches your repo name
+2. Enable GitHub Pages in repository settings (Settings > Pages)
+3. Select `gh-pages` branch as source
+4. Site will be live at `https://<username>.github.io/<repo-name>/`
 
 ## Project Structure
 
@@ -98,30 +126,63 @@ All colors and styles can be customized in:
 portfolio/
 ├── src/
 │   ├── components/
-│   │   ├── AnimatedBackground.tsx  # Background animations
-│   │   ├── ScrollProgress.tsx      # Scroll indicator
-│   │   ├── Hero.tsx                # Landing section
-│   │   ├── About.tsx               # About me section
-│   │   ├── Skills.tsx              # Tech stack section
-│   │   └── Contact.tsx             # Contact form
-│   ├── App.tsx                     # Main app component
-│   ├── main.tsx                    # Entry point
-│   └── index.css                   # Global styles
+│   │   ├── AnimatedBackground.tsx    # Floating particles & gradient orbs
+│   │   ├── ScrollProgress.tsx        # Page scroll indicator
+│   │   ├── LanguageSwitcher.tsx      # EN/PL language toggle
+│   │   ├── Hero.tsx                  # Landing section with profile
+│   │   ├── About.tsx                 # Personal introduction
+│   │   ├── Services.tsx              # Service offerings showcase
+│   │   ├── Experience.tsx            # Professional timeline
+│   │   ├── Skills.tsx                # Tech stack display
+│   │   ├── Contact.tsx               # Contact form with EmailJS
+│   │   └── Footer.tsx                # Footer section
+│   ├── contexts/
+│   │   └── LanguageContext.tsx       # Bilingual translation system
+│   ├── styles/
+│   │   └── mobile.css                # Mobile-specific styles
+│   ├── assets/
+│   │   └── pfp.jpg                   # Profile photo
+│   ├── App.tsx                       # Main component orchestration
+│   ├── main.tsx                      # Application entry point
+│   └── index.css                     # Global styles
 ├── public/
-├── index.html
-├── vite.config.ts
-├── tailwind.config.ts
-├── tsconfig.json
-└── package.json
+│   └── vite.svg                      # Default favicon
+├── dist/                             # Production build output
+├── index.html                        # HTML entry point
+├── vite.config.ts                    # Vite configuration
+├── tailwind.config.ts                # Tailwind theme config
+├── tsconfig.json                     # TypeScript config
+├── package.json                      # Dependencies & scripts
+├── EMAILJS_SETUP.md                  # EmailJS setup guide
+└── README.md
 ```
+
+## Development Notes
+
+- Language switching preserves user preference across sessions
+- Experience duration updates every minute for accuracy
+- All animations respect `prefers-reduced-motion` (Framer Motion default)
+- TypeScript strict mode enabled for maximum type safety
+- Component-based architecture for easy maintenance
+
+## Browser Support
+
+- Chrome/Edge (last 2 versions)
+- Firefox (last 2 versions)
+- Safari 14+
+- Mobile browsers (iOS Safari, Chrome Android)
 
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) file for details
 
 ## Contact
 
 Konrad Malinowski
-- Email: malinowski.konrad45@gmail.com
-- GitHub: [@konradxmalinowski](https://github.com/konradxmalinowski)
-- LinkedIn: [konrad-malinowski](https://linkedin.com/in/konradxmalinowski)
+- **Email:** malinowski.konrad45@gmail.com
+- **GitHub:** [@konradxmalinowski](https://github.com/konradxmalinowski)
+- **LinkedIn:** [konradxmalinowski](https://linkedin.com/in/konradxmalinowski)
+
+---
+
+**Built with passion using React, TypeScript, and modern web technologies.**
