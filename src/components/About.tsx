@@ -67,19 +67,17 @@ const About = () => {
                 </div>
                 <motion.div
                   animate={{
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 180, 360],
+                    rotate: 360,
                   }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear", repeatType: "loop" }}
                   className="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-xl"
                   aria-hidden="true"
                 />
                 <motion.div
                   animate={{
-                    scale: [1.2, 1, 1.2],
-                    rotate: [360, 180, 0],
+                    rotate: -360,
                   }}
-                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear", repeatType: "loop" }}
                   className="absolute -bottom-4 -left-4 w-32 h-32 bg-cyan-500/20 rounded-full blur-xl"
                   aria-hidden="true"
                 />

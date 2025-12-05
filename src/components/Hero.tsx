@@ -20,11 +20,10 @@ const Hero = () => {
           <motion.div
             animate={!prefersReducedMotion ? {
               scale: [1, 1.05, 1],
-              opacity: [0.6, 1, 0.6],
             } : {}}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 rounded-full bg-blue-500 blur-xl"
-            style={{ willChange: 'transform, opacity' }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", repeatType: "reverse" }}
+            className="absolute inset-0 rounded-full bg-blue-500 blur-xl opacity-80"
+            style={{ willChange: 'transform' }}
             aria-hidden="true"
           />
           <div
