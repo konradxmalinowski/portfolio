@@ -18,6 +18,7 @@ const Experience = () => {
   const ref = useRef<HTMLDivElement | null>(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
   const { t } = useLanguage()
+  const [currentTime, setCurrentTime] = useState(new Date())
 
   const experiences: ExperienceItem[] = [
     {
@@ -79,7 +80,7 @@ const Experience = () => {
 
   const computeDuration = (start: Date | null, end: Date | null) => {
     if (!start) return ''
-    const to = end || new Date()
+    const to = end || currentTime
     let months = (to.getFullYear() - start.getFullYear()) * 12 + (to.getMonth() - start.getMonth())
     if (months < 1) return t('experience.lessThanMonth')
     const years = Math.floor(months / 12)
@@ -90,74 +91,22 @@ const Experience = () => {
     return parts.join(' ')
   }
 
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const firstCardRef = useRef<HTMLDivElement | null>(null)
-  const lastCardRef = useRef<HTMLDivElement | null>(null)
-  const firstDotRef = useRef<HTMLSpanElement | null>(null)
-  const [lineStyle, setLineStyle] = useState<{ top: number; height: number; left?: number } | null>(null)
-
-  const updateLine = () => {
-    if (!containerRef.current || !firstCardRef.current || !lastCardRef.current) return
-    const containerRect = containerRef.current.getBoundingClientRect()
-    const firstRect = firstCardRef.current.getBoundingClientRect()
-    const lastRect = lastCardRef.current.getBoundingClientRect()
-    const PAD = 12
-    const top = Math.max(0, firstRect.top - containerRect.top - PAD)
-    const bottom = Math.max(0, lastRect.bottom - containerRect.top + PAD)
-    const height = Math.max(0, bottom - top)
-    let left: number | undefined = undefined
-    try {
-      const nodes = containerRef.current.querySelectorAll('[data-timeline-item]')
-      const centers: number[] = []
-      nodes.forEach((node) => {
-        const el = node as HTMLElement
-        const col = el.children[0] as HTMLElement | undefined
-        if (col) {
-          const colRect = col.getBoundingClientRect()
-          centers.push(colRect.left - containerRect.left + colRect.width / 2)
-        }
-      })
-      if (centers.length > 0) {
-        const sum = centers.reduce((a, b) => a + b, 0)
-        left = Math.round(sum / centers.length)
-      }
-    } catch (e) {
-    }
-
-    try {
-      if (firstDotRef && firstDotRef.current) {
-        const dotRect = firstDotRef.current.getBoundingClientRect()
-        left = Math.round(dotRect.left - containerRect.left + dotRect.width / 2)
-      }
-    } catch (e) {
-    }
-
-    if (left == null) {
-      try {
-        const cs = window.getComputedStyle(containerRef.current)
-        const paddingLeft = parseFloat(cs.paddingLeft || '0')
-        left = Math.round(paddingLeft + 24)
-      } catch (e) {
-        left = 24
-      }
-    }
-
-    const HORIZONTAL_NUDGE = 4 
-    left = left + HORIZONTAL_NUDGE
-
-    setLineStyle({ top, height, left })
-  }
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    updateLine()
-    window.addEventListener('resize', updateLine)
-    const ro = new ResizeObserver(updateLine)
-    if (containerRef.current) ro.observe(containerRef.current)
-    return () => {
-      window.removeEventListener('resize', updateLine)
-      ro.disconnect()
-    }
-  }, [experiences.length])
+    // Small delay to ensure proper rendering
+    const timer = setTimeout(() => setIsReady(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    // Update current time every minute to keep durations accurate
+    const interval = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 60000) // Update every minute
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <section id="experience" className="min-h-screen flex items-center justify-center bg-transparent py-20 relative overflow-x-hidden" aria-label="Work experience section">
@@ -167,22 +116,18 @@ const Experience = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8 }}
-            className="max-w-5xl mx-auto relative z-10 md:pl-12"
-            ref={containerRef}
+            className="max-w-5xl mx-auto relative z-10"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-12">{t('experience.title')}</h2>
 
-            <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="space-y-8 relative">
+            <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="relative">
+              {/* Timeline line - positioned absolutely, centered on dots */}
               <div
-                className="hidden md:block absolute w-0.5 bg-gradient-to-b from-blue-500 via-blue-600 to-transparent"
-                style={
-                  lineStyle
-                    ? { top: `${lineStyle.top}px`, height: `${lineStyle.height}px`, left: `${lineStyle.left ?? 24}px`, transform: 'translateX(-50%)', zIndex: -1, pointerEvents: 'none' }
-                    : { top: 0, bottom: 0, left: '24px', transform: 'translateX(-50%)', zIndex: -1, pointerEvents: 'none' }
-                }
+                className="hidden md:block absolute left-[22px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-blue-600 to-transparent opacity-0 transition-opacity duration-500"
+                style={{ opacity: isReady ? 1 : 0 }}
               />
 
-              <div className="space-y-8" role="list" aria-label="Work experience timeline">
+              <div className="space-y-12" role="list" aria-label="Work experience timeline">
                 {experiences.map((exp, index) => {
                   const start = parseDate(exp.start)
                   const end = parseDate(exp.end)
@@ -190,19 +135,17 @@ const Experience = () => {
                   const durationText = computeDuration(start, end)
 
                   return (
-                    <div key={index} data-timeline-item className="md:grid md:grid-cols-[48px_1fr] md:gap-6" role="listitem">
-                        <div className="hidden md:flex items-start justify-center">
-                          <div className="mt-8">
-                            <span ref={index === 0 ? firstDotRef : undefined} className="block w-4 h-4 bg-white rounded-full border-2 border-blue-400/70 shadow-sm relative z-50" />
-                          </div>
-                        </div>
+                    <div key={index} className="relative flex gap-6 md:gap-8" role="listitem">
+                      {/* Timeline dot - aligned with title */}
+                      <div className="hidden md:flex items-start justify-center pt-2 shrink-0 w-11">
+                        <span className="block w-4 h-4 bg-white rounded-full border-4 border-blue-500 shadow-lg shadow-blue-500/50 relative z-10" />
+                      </div>
 
                       <motion.div
                         variants={itemVariants}
                         whileHover={{ scale: 1.02, x: 10 }}
                         transition={{ type: 'spring', stiffness: 300 }}
-                        className="relative z-10 bg-white/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
-                        ref={index === 0 ? firstCardRef : index === experiences.length - 1 ? lastCardRef : undefined}
+                        className="flex-1 bg-white/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
                       >
                         {exp.current && (
                           <motion.div initial={{ scale: 0 }} animate={isInView ? { scale: 1 } : { scale: 0 }} transition={{ delay: 0.5 + index * 0.2 }} className="absolute -top-3 -right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full" role="status" aria-label="Current position">
