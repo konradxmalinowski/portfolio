@@ -72,8 +72,36 @@ const translations = {
     'service.database.f3': 'Data Migrations',
     'service.database.f4': 'Performance Tuning',
 
+    'stats.experience': 'Years of Experience',
+    'stats.technologies': 'Technologies',
+    'stats.integrations': 'API Integrations',
+
+    'features.passion': 'Passion-driven',
+    'features.selftaught': 'Self-taught',
+    'features.ai': 'AI-enhanced',
+    'features.fastlearner': 'Fast learner',
+
     'experience.title': 'Experience',
     'experience.current': 'Current',
+    'experience.present': 'Present',
+    'experience.lessThanMonth': 'Less than a month',
+    'experience.year': 'year',
+    'experience.years': 'years',
+    'experience.month': 'month',
+    'experience.months': 'months',
+    'experience.internship': 'Internship',
+    'experience.freelance': 'Freelance/Contract',
+    'experience.remote': 'Remote',
+    'experience.hybrid': 'Hybrid',
+
+    'experience.aibron.role': 'Full-stack Developer (Angular/Java)',
+    'experience.aibron.location': 'Poland · Hybrid',
+    'experience.aibron.desc': 'I have been developing Educomfee - enterprise-grade application optimizes complex business processes using a modular, microservices-based architecture. It\'s built with a scalable Spring Boot backend and a modern Angular frontend, ensuring a robust and responsive user experience.',
+
+    'experience.zse.company': 'Technikum nr 2 w Zespole Szkół Elektronicznych',
+    'experience.zse.role': 'WordPress Developer',
+    'experience.zse.location': 'Poland · Remote',
+    'experience.zse.desc': 'I redesigned and developed the www.zse-zdwola.pl school website in WordPress, creating a modern, responsive, and user-friendly platform for students, parents, and staff. I optimized performance, improved content management, delivered a clean layout that the school team can easily maintain, and I continue to further develop and enhance the platform.',
 
     'skills.title': 'Tech Stack',
     'skills.frontend': 'Frontend',
@@ -163,8 +191,36 @@ const translations = {
     'service.database.f3': 'Migracje Danych',
     'service.database.f4': 'Tuning Wydajności',
 
+    'stats.experience': 'Lata Doświadczenia',
+    'stats.technologies': 'Technologie',
+    'stats.integrations': 'Integracje API',
+
+    'features.passion': 'Pasja',
+    'features.selftaught': 'Samouk',
+    'features.ai': 'Wspomaganie AI',
+    'features.fastlearner': 'Szybka nauka',
+
     'experience.title': 'Doświadczenie',
     'experience.current': 'Obecnie',
+    'experience.present': 'Obecnie',
+    'experience.lessThanMonth': 'Mniej niż miesiąc',
+    'experience.year': 'rok',
+    'experience.years': 'lata',
+    'experience.month': 'miesiąc',
+    'experience.months': 'miesiące',
+    'experience.internship': 'Staż',
+    'experience.freelance': 'Freelance/Kontrakt',
+    'experience.remote': 'Zdalnie',
+    'experience.hybrid': 'Hybrydowo',
+
+    'experience.aibron.role': 'Full-stack Developer (Angular/Java)',
+    'experience.aibron.location': 'Polska · Hybrydowo',
+    'experience.aibron.desc': 'Rozwijam Educomfee - aplikację klasy enterprise, która optymalizuje złożone procesy biznesowe przy użyciu modularnej architektury mikroserwisowej. Jest zbudowana na skalowalnym backendzie Spring Boot i nowoczesnym frontendzie Angular, zapewniając solidne i responsywne doświadczenie użytkownika.',
+
+    'experience.zse.company': 'Technikum nr 2 w Zespole Szkół Elektronicznych',
+    'experience.zse.role': 'WordPress Developer',
+    'experience.zse.location': 'Polska · Zdalnie',
+    'experience.zse.desc': 'Przeprojektowałem i rozwinąłem stronę szkoły www.zse-zdwola.pl w WordPress, tworząc nowoczesną, responsywną i przyjazną platformę dla uczniów, rodziców i personelu. Zoptymalizowałem wydajność, poprawiłem zarządzanie treścią, dostarczyłem przejrzysty układ, który zespół szkoły może łatwo utrzymywać, i nadal rozwijam i ulepszam platformę.',
 
     'skills.title': 'Stack Technologiczny',
     'skills.frontend': 'Frontend',

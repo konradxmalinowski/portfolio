@@ -9,9 +9,9 @@ const About = () => {
   const { t } = useLanguage()
 
   const stats = [
-    { label: 'Years of Experience', value: '2+', icon: '📅' },
-    { label: 'Technologies', value: '20+', icon: '💻' },
-    { label: 'API Integrations', value: '5+', icon: '⚡' }
+    { label: t('stats.experience'), value: '2+', icon: '📅' },
+    { label: t('stats.technologies'), value: '20+', icon: '💻' },
+    { label: t('stats.integrations'), value: '5+', icon: '⚡' }
   ]
 
   return (
@@ -99,19 +99,19 @@ const About = () => {
                 <div className="grid grid-cols-2 gap-4 pt-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-xl">🎯</div>
-                    <span className="text-white/80 text-sm">Passion-driven</span>
+                    <span className="text-white/80 text-sm">{t('features.passion')}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-xl">🧠</div>
-                    <span className="text-white/80 text-sm">Self-taught</span>
+                    <span className="text-white/80 text-sm">{t('features.selftaught')}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-xl">🤖</div>
-                    <span className="text-white/80 text-sm">AI-enhanced</span>
+                    <span className="text-white/80 text-sm">{t('features.ai')}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-xl">⚡</div>
-                    <span className="text-white/80 text-sm">Fast learner</span>
+                    <span className="text-white/80 text-sm">{t('features.fastlearner')}</span>
                   </div>
                 </div>
               </div>

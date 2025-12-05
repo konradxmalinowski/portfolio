@@ -22,25 +22,23 @@ const Experience = () => {
   const experiences: ExperienceItem[] = [
     {
       company: 'Aibron',
-      role: 'Full-stack Developer (Angular/Java)',
-      type: 'Internship',
+      role: t('experience.aibron.role'),
+      type: t('experience.internship'),
       start: '2025-08-01',
       end: null,
-      location: 'Poland · Hybrid',
-      description:
-        "I have been developing Educomfee - enterprise-grade application optimizes complex business processes using a modular, microservices-based architecture. It's built with a scalable Spring Boot backend and a modern Angular frontend, ensuring a robust and responsive user experience.",
+      location: t('experience.aibron.location'),
+      description: t('experience.aibron.desc'),
       skills: ['JavaScript', 'Microservices', 'Angular', 'Java', 'Spring Boot', 'Enterprise Applications'],
       current: true,
     },
     {
-      company: 'Technikum nr 2 w Zespole Szkół Elektronicznych',
-      role: 'WordPress Developer',
-      type: 'Freelance/Contract',
+      company: t('experience.zse.company'),
+      role: t('experience.zse.role'),
+      type: t('experience.freelance'),
       start: '2023-05-01',
       end: null,
-      location: 'Poland · Remote',
-      description:
-        'I redesigned and developed the www.zse-zdwola.pl school website in WordPress, creating a modern, responsive, and user-friendly platform for students, parents, and staff. I optimized performance, improved content management, delivered a clean layout that the school team can easily maintain, and I continue to further develop and enhance the platform.',
+      location: t('experience.zse.location'),
+      description: t('experience.zse.desc'),
       skills: ['Search Engine Optimization (SEO)', 'MySQL', 'WordPress', 'Web Design', 'Performance Optimization', 'Content Management'],
       current: true,
     },
@@ -75,7 +73,7 @@ const Experience = () => {
     if (!start) return ''
     const fmt = new Intl.DateTimeFormat(undefined, { month: 'short', year: 'numeric' })
     const startStr = fmt.format(start)
-    const endStr = end ? fmt.format(end) : 'Present'
+    const endStr = end ? fmt.format(end) : t('experience.present')
     return `${startStr} – ${endStr}`
   }
 
@@ -83,12 +81,12 @@ const Experience = () => {
     if (!start) return ''
     const to = end || new Date()
     let months = (to.getFullYear() - start.getFullYear()) * 12 + (to.getMonth() - start.getMonth())
-    if (months < 1) return 'Less than a month'
+    if (months < 1) return t('experience.lessThanMonth')
     const years = Math.floor(months / 12)
     const remMonths = months % 12
     const parts: string[] = []
-    if (years > 0) parts.push(`${years} ${years === 1 ? 'year' : 'years'}`)
-    if (remMonths > 0) parts.push(`${remMonths} ${remMonths === 1 ? 'month' : 'months'}`)
+    if (years > 0) parts.push(`${years} ${years === 1 ? t('experience.year') : t('experience.years')}`)
+    if (remMonths > 0) parts.push(`${remMonths} ${remMonths === 1 ? t('experience.month') : t('experience.months')}`)
     return parts.join(' ')
   }
 
