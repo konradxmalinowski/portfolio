@@ -3,16 +3,66 @@ import { useRef, useState, FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
 import { useLanguage } from '../contexts/LanguageContext'
 
+const RATE_LIMIT_KEY = 'email_sent_timestamps'
+const MAX_EMAILS_PER_HOUR = 5
+const ONE_HOUR_MS = 60 * 60 * 1000
+
+const getCookie = (name: string): string | null => {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null
+  return null
+}
+
+const setCookie = (name: string, value: string, hours: number) => {
+  const date = new Date()
+  date.setTime(date.getTime() + hours * 60 * 60 * 1000)
+  document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/;SameSite=Strict`
+}
+
 const Contact = () => {
   const ref = useRef(null)
   const formRef = useRef<HTMLFormElement>(null)
   const isInView = useInView(ref, { once: true })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'ratelimit'>('idle')
   const { t } = useLanguage()
+
+  const checkRateLimit = (): boolean => {
+    const now = Date.now()
+    const storedTimestamps = getCookie(RATE_LIMIT_KEY)
+    const timestamps: number[] = storedTimestamps ? JSON.parse(decodeURIComponent(storedTimestamps)) : []
+
+    const recentTimestamps = timestamps.filter(timestamp => now - timestamp < ONE_HOUR_MS)
+
+    if (recentTimestamps.length > 0) {
+      setCookie(RATE_LIMIT_KEY, encodeURIComponent(JSON.stringify(recentTimestamps)), 1)
+    }
+
+    return recentTimestamps.length < MAX_EMAILS_PER_HOUR
+  }
+
+  const recordEmailSent = () => {
+    const now = Date.now()
+    const storedTimestamps = getCookie(RATE_LIMIT_KEY)
+    const timestamps: number[] = storedTimestamps ? JSON.parse(decodeURIComponent(storedTimestamps)) : []
+
+    timestamps.push(now)
+    setCookie(RATE_LIMIT_KEY, encodeURIComponent(JSON.stringify(timestamps)), 1)
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    e.stopPropagation()
+
+
+    if (isSubmitting) return
+
+    if (!checkRateLimit()) {
+      setSubmitStatus('ratelimit')
+      return
+    }
+
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
@@ -24,6 +74,7 @@ const Contact = () => {
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
 
+      recordEmailSent()
       setSubmitStatus('success')
       formRef.current?.reset()
     } catch (error) {
@@ -162,6 +213,7 @@ const Contact = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 space-y-6 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
               aria-label="Contact form"
+              style={{ scrollMarginTop: '100px' }}
             >
               <h3 className="text-2xl font-bold text-white mb-6">{t('contact.form.title')}</h3>
 
@@ -210,10 +262,16 @@ const Contact = () => {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                 className="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-500/70"
                 aria-label={isSubmitting ? 'Sending message...' : 'Submit contact form'}
+                onClick={(e) => {
+                  if (isSubmitting) {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  }
+                }}
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">
@@ -228,35 +286,52 @@ const Contact = () => {
                 )}
               </motion.button>
 
-              {submitStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-green-500/20 border border-green-500/50 rounded-lg p-4 flex items-center gap-3"
-                >
-                  <svg className="w-6 h-6 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <p className="text-green-400 font-semibold">
-                    {t('contact.form.success')}
-                  </p>
-                </motion.div>
-              )}
+              <div className="min-h-[72px]">
+                {submitStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-green-500/20 border border-green-500/50 rounded-lg p-4 flex items-center gap-3"
+                  >
+                    <svg className="w-6 h-6 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-green-400 font-semibold">
+                      {t('contact.form.success')}
+                    </p>
+                  </motion.div>
+                )}
 
-              {submitStatus === 'error' && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 flex items-center gap-3"
-                >
-                  <svg className="w-6 h-6 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <p className="text-red-400 font-semibold">
-                    {t('contact.form.error')}
-                  </p>
-                </motion.div>
-              )}
+                {submitStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 flex items-center gap-3"
+                  >
+                    <svg className="w-6 h-6 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-red-400 font-semibold">
+                      {t('contact.form.error')}
+                    </p>
+                  </motion.div>
+                )}
+
+                {submitStatus === 'ratelimit' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-orange-500/20 border border-orange-500/50 rounded-lg p-4 flex items-center gap-3"
+                  >
+                    <svg className="w-6 h-6 text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <p className="text-orange-400 font-semibold">
+                      {t('contact.form.ratelimit')}
+                    </p>
+                  </motion.div>
+                )}
+              </div>
             </motion.form>
           </div>
         </motion.div>

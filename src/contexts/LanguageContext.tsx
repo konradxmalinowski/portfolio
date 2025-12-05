@@ -129,6 +129,7 @@ const translations = {
     'contact.form.sending': 'Sending...',
     'contact.form.success': "Message sent successfully! I'll get back to you soon.",
     'contact.form.error': 'Failed to send message. Please try again or email me directly.',
+    'contact.form.ratelimit': 'Too many messages sent. Please wait before sending another message. Limit: 5 messages per hour.',
   },
   pl: {
     'hero.greeting': 'Hej, jestem',
@@ -248,6 +249,7 @@ const translations = {
     'contact.form.sending': 'Wysyłanie...',
     'contact.form.success': 'Wiadomość wysłana pomyślnie! Odezwę się wkrótce.',
     'contact.form.error': 'Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz bezpośrednio na email.',
+    'contact.form.ratelimit': 'Wysłano zbyt wiele wiadomości. Poczekaj przed wysłaniem kolejnej wiadomości. Limit: 5 wiadomości na godzinę.',
   }
 }
 
