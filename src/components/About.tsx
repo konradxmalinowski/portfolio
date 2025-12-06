@@ -1,5 +1,5 @@
 import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import pfp from '../assets/pfp.jpg';
 
@@ -7,6 +7,7 @@ const About = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
   const { t } = useLanguage()
+  const [pfpLoaded, setPfpLoaded] = useState(false)
 
   const stats = [
     { label: t('stats.experience'), value: '2+', icon: '📅', iconLabel: 'Calendar' },
@@ -59,12 +60,13 @@ const About = () => {
                 className="relative"
               >
                 <div className="w-full aspect-square bg-gradient-to-br from-blue-600/30 to-cyan-600/30 rounded-2xl overflow-hidden backdrop-blur-lg border border-blue-500/30 p-4 ">
-                  <div className='w-full h-full bg-center bg-cover' style={{ backgroundImage: `url(${pfp})` }}>
+                  <div className='w-full h-full bg-center bg-cover rounded-xl object-cover object-center' style={{ backgroundImage: `url(${pfp})` }}>
                     <img
                       src={pfp}
                       alt="Konrad Malinowski - Professional portrait"
-                      className="w-full h-full object-cover rounded-xl object-center"
+                      className={`w-full h-full object-cover rounded-xl object-center transition-[filter,opacity] duration-500 ${pfpLoaded ? 'blur-0 opacity-100' : 'blur-md opacity-70'}`}
                       loading='lazy'
+                      onLoad={() => setPfpLoaded(true)}
                     />
                   </div>
                 </div>

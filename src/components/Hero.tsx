@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import pfp from '../assets/pfp.jpg'
 
 const Hero = () => {
   const { t } = useLanguage()
+  const [pfpLoaded, setPfpLoaded] = useState(false)
   const prefersReducedMotion = typeof window !== 'undefined'
     ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
     : false
@@ -32,12 +34,13 @@ const Hero = () => {
             aria-label="Profile picture of Konrad Malinowski"
             style={{ willChange: 'transform' }}
           >
-            <div className='w-full h-full bg-center bg-cover' style={{ backgroundImage: `url(${pfp})` }}>
+            <div className='w-full h-full rounded-full overflow-hidden bg-center bg-cover' style={{ backgroundImage: `url(${pfp})` }}>
               <img
                 src={pfp}
                 alt="Konrad Malinowski - Full-stack Developer"
-                className="w-full h-full object-cover rounded-full object-center"
+                className={`w-full h-full object-cover rounded-full transition-[filter,opacity] duration-500 ${pfpLoaded ? 'blur-0 opacity-100' : 'blur-md opacity-70'}`}
                 loading="lazy"
+                onLoad={() => setPfpLoaded(true)}
               />
             </div>
           </div>
