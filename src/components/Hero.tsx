@@ -32,11 +32,14 @@ const Hero = () => {
             aria-label="Profile picture of Konrad Malinowski"
             style={{ willChange: 'transform' }}
           >
-            <img
-              src={pfp}
-              alt="Konrad Malinowski - Full-stack Developer"
-              className="w-full h-full object-cover rounded-full"
-            />
+            <div className='w-full h-full bg-center bg-cover' style={{ backgroundImage: `url(${pfp})` }}>
+              <img
+                src={pfp}
+                alt="Konrad Malinowski - Full-stack Developer"
+                className="w-full h-full object-cover rounded-full object-center"
+                loading="lazy"
+              />
+            </div>
           </div>
         </motion.div>
 

@@ -58,12 +58,15 @@ const About = () => {
                 transition={{ type: "spring", stiffness: 300 }}
                 className="relative"
               >
-                <div className="w-full aspect-square bg-gradient-to-br from-blue-600/30 to-cyan-600/30 rounded-2xl overflow-hidden backdrop-blur-lg border border-blue-500/30 p-4">
-                  <img
-                    src={pfp}
-                    alt="Konrad Malinowski - Professional portrait"
-                    className="w-full h-full object-cover rounded-xl"
-                  />
+                <div className="w-full aspect-square bg-gradient-to-br from-blue-600/30 to-cyan-600/30 rounded-2xl overflow-hidden backdrop-blur-lg border border-blue-500/30 p-4 ">
+                  <div className='w-full h-full bg-center bg-cover' style={{ backgroundImage: `url(${pfp})` }}>
+                    <img
+                      src={pfp}
+                      alt="Konrad Malinowski - Professional portrait"
+                      className="w-full h-full object-cover rounded-xl object-center"
+                      loading='lazy'
+                    />
+                  </div>
                 </div>
                 <motion.div
                   animate={{
