@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer: React.FC = () => (
   <footer className="w-full text-center py-4 text-gray-200 border-none text-sm mt-8">
-    Copyright © {new Date().getFullYear()} Portfolio. All rights reserved.
+    Copyright © {new Date().getFullYear()} Konrad Malinowski. All rights reserved.
   </footer>
 );
 
