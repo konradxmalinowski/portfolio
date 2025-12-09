@@ -1,16 +1,29 @@
+import { Suspense, lazy } from 'react'
 import Hero from './components/Hero'
-import About from './components/About'
-import Services from './components/Services'
-import Experience from './components/Experience'
-import Awards from './components/Awards'
-import Skills from './components/Skills'
-import Projects from './components/Projects'
-import Contact from './components/Contact'
+import Skeleton from './components/Skeleton'
 import AnimatedBackground from './components/AnimatedBackground'
 import ScrollProgress from './components/ScrollProgress'
 import ScrollToTop from './components/ScrollToTop'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import Footer from './components/Footer'
+
+// Lazy load heavy components for code splitting
+const About = lazy(() => import('./components/About'))
+const Services = lazy(() => import('./components/Services'))
+const Experience = lazy(() => import('./components/Experience'))
+const Awards = lazy(() => import('./components/Awards'))
+const Skills = lazy(() => import('./components/Skills'))
+const Projects = lazy(() => import('./components/Projects'))
+const Contact = lazy(() => import('./components/Contact'))
+
+// Fallback loading component
+const LoadingFallback = () => (
+  <div className="min-h-screen flex items-center justify-center py-20">
+    <div className="container mx-auto px-6 max-w-7xl">
+      <Skeleton count={5} height={250} />
+    </div>
+  </div>
+)
 
 function App() {
   return (
@@ -28,13 +41,27 @@ function App() {
         <AnimatedBackground />
         <main id="main-content">
           <Hero />
-          <About />
-          <Services />
-          <Experience />
-          <Awards />
-          <Skills />
-          <Projects />
-          <Contact />
+          <Suspense fallback={<LoadingFallback />}>
+            <About />
+          </Suspense>
+          <Suspense fallback={<LoadingFallback />}>
+            <Services />
+          </Suspense>
+          <Suspense fallback={<LoadingFallback />}>
+            <Experience />
+          </Suspense>
+          <Suspense fallback={<LoadingFallback />}>
+            <Awards />
+          </Suspense>
+          <Suspense fallback={<LoadingFallback />}>
+            <Skills />
+          </Suspense>
+          <Suspense fallback={<LoadingFallback />}>
+            <Projects />
+          </Suspense>
+          <Suspense fallback={<LoadingFallback />}>
+            <Contact />
+          </Suspense>
         </main>
       </div>
       <Footer />

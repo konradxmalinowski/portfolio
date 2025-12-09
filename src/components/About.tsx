@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
+import Skeleton from './Skeleton'
 import pfp from '../assets/pfp.jpg';
 
 const About = () => {
@@ -8,6 +9,12 @@ const About = () => {
   const isInView = useInView(ref, { once: true })
   const { t } = useLanguage()
   const [pfpLoaded, setPfpLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 300)
+    return () => clearTimeout(timer)
+  }, [])
 
   const stats = [
     { label: t('stats.experience'), value: '2+', icon: '📅', iconLabel: 'Calendar' },
@@ -30,21 +37,27 @@ const About = () => {
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8" role="list" aria-label="Professional statistics">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ y: 20 }}
-                animate={isInView ? { y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
-                role="listitem"
-              >
-                <div className="text-4xl mb-3" role="img" aria-label={stat.iconLabel}>{stat.icon}</div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.value}</div>
-                <div className="text-white/60 text-sm">{stat.label}</div>
-              </motion.div>
-            ))}
+            {isLoading ? (
+              <>
+                <Skeleton count={3} height={160} />
+              </>
+            ) : (
+              stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ y: 20 }}
+                  animate={isInView ? { y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
+                  role="listitem"
+                >
+                  <div className="text-4xl mb-3" role="img" aria-label={stat.iconLabel}>{stat.icon}</div>
+                  <div className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.value}</div>
+                  <div className="text-white/60 text-sm">{stat.label}</div>
+                </motion.div>
+              ))
+            )}
           </div>
 
           <motion.div
@@ -53,6 +66,12 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
           >
+            {isLoading ? (
+              <div className="space-y-6">
+                <Skeleton height={300} />
+                <Skeleton count={3} height={80} />
+              </div>
+            ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 2 }}
@@ -121,6 +140,7 @@ const About = () => {
                 </div>
               </div>
             </div>
+            )}
           </motion.div>
         </motion.div>
       </div>

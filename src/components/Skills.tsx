@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
+import Skeleton from './Skeleton'
 
 interface Skill {
   name: string
@@ -12,6 +13,12 @@ const Skills = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
   const { t } = useLanguage()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 300)
+    return () => clearTimeout(timer)
+  }, [])
 
   const skillCategories = [
     {
@@ -118,41 +125,50 @@ const Skills = () => {
             role="list"
             aria-label="Skill categories"
           >
-            {skillCategories.map((category) => (
-              <motion.div
-                key={category.category}
-                variants={itemVariants}
-                whileHover={{ y: -5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="bg-white/10 backdrop-blur-lg rounded-2xl p-7 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
-                role="listitem"
-              >
-                <h3 className="text-2xl font-bold text-white mb-6">
-                  {category.category}
-                </h3>
-                <div className="flex flex-wrap gap-3" role="list" aria-label={`${category.category} skills`}>
-                  {category.skills.map((skill) => (
-                    <motion.div
-                      key={skill.name}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ type: "spring", stiffness: 400 }}
-                      className="flex items-center gap-2.5 px-4 py-2.5 bg-white/10 rounded-lg border border-white/10 hover:border-blue-500/50 transition-all duration-200"
-                      role="listitem"
-                    >
-                      <img
-                        alt={skill.name}
-                        className="w-6 h-6"
-                        src={`https://cdn.simpleicons.org/${skill.icon}/${skill.color}`}
-                        loading="lazy"
-                      />
-                      <span className="text-white text-base font-medium">
-                        {skill.name}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+            {isLoading ? (
+              <>
+                <Skeleton height={300} />
+                <Skeleton height={300} />
+                <Skeleton height={300} />
+                <Skeleton height={300} />
+              </>
+            ) : (
+              skillCategories.map((category) => (
+                <motion.div
+                  key={category.category}
+                  variants={itemVariants}
+                  whileHover={{ y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-7 border border-white/10 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
+                  role="listitem"
+                >
+                  <h3 className="text-2xl font-bold text-white mb-6">
+                    {category.category}
+                  </h3>
+                  <div className="flex flex-wrap gap-3" role="list" aria-label={`${category.category} skills`}>
+                    {category.skills.map((skill) => (
+                      <motion.div
+                        key={skill.name}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                        className="flex items-center gap-2.5 px-4 py-2.5 bg-white/10 rounded-lg border border-white/10 hover:border-blue-500/50 transition-all duration-200"
+                        role="listitem"
+                      >
+                        <img
+                          alt={skill.name}
+                          className="w-6 h-6"
+                          src={`https://cdn.simpleicons.org/${skill.icon}/${skill.color}`}
+                          loading="lazy"
+                        />
+                        <span className="text-white text-base font-medium">
+                          {skill.name}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))
+            )}
           </motion.div>
         </motion.div>
       </div>

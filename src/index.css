@@ -107,6 +107,19 @@ select:focus-visible {
   outline-offset: 2px;
 }
 
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-skeleton {
+  animation: skeleton-shimmer 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -124,5 +137,9 @@ select:focus-visible {
   .animated-bg {
     -webkit-filter: blur(32px);
     filter: blur(32px);
+  }
+
+  .animate-skeleton {
+    animation: none;
   }
 }
