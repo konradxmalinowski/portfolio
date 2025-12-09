@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test:*)",
+      "Bash(tree:*)",
+      "WebFetch(domain:www.skylinelabs.tech)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
