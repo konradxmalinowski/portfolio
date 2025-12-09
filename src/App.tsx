@@ -2,7 +2,9 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Services from './components/Services'
 import Experience from './components/Experience'
+import Awards from './components/Awards'
 import Skills from './components/Skills'
+import Projects from './components/Projects'
 import Contact from './components/Contact'
 import AnimatedBackground from './components/AnimatedBackground'
 import ScrollProgress from './components/ScrollProgress'
@@ -27,7 +29,9 @@ function App() {
           <About />
           <Services />
           <Experience />
+          <Awards />
           <Skills />
+          <Projects />
           <Contact />
         </main>
       </div>
